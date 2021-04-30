@@ -15,12 +15,10 @@ print("\nStarting...\n")
 def create():
     options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    options.binary_location = r"D:\Program Files\Google\Chrome\Application\chrome.exe"
-    # options.add_argument("--disable-gpu")
-    # options.add_argument("--headless")
+    # options.binary_location = r"D:\Program Files\Google\Chrome\Application\chrome.exe"
 
     driver = webdriver.Chrome(
-        executable_path=r"C:\Users\Bertil\OneDrive\Desktop\Impf Termin Notifier\chromedriver.exe", options=options)
+        executable_path="chromedriver.exe", options=options)
 
     driver.minimize_window()
 
