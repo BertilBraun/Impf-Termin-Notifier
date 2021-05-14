@@ -1,31 +1,12 @@
-import os
-import sys
 import time
-from selenium import webdriver
-from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.common.keys import Keys
+from util import *
 
 mp = {
     # "12345": "AAAA-AAAA-AAAA", # TODO replace this
 }
 
-print("\nStarting...\n")
 
-
-def create():
-    options = webdriver.ChromeOptions()
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    # options.binary_location = r"D:\Program Files\Google\Chrome\Application\chrome.exe"
-
-    driver = webdriver.Chrome(
-        executable_path="chromedriver.exe", options=options)
-
-    driver.minimize_window()
-
-    return driver
-
-
-def crawl(key, plz, driver: WebDriver):
+def crawl(key, plz, driver):
     url = "https://229-iz.impfterminservice.de/impftermine/suche/" + key + "/" + plz
 
     time.sleep(1)
@@ -51,18 +32,16 @@ def crawl(key, plz, driver: WebDriver):
             raise "Termin availible"
         print("element not found")
     except:
-        driver.maximize_window()
-        input("One was found!")
+        onSuccess(url)
 
 
 def main():
     driver = create()
-    i = 0
 
     try:
-        while True:
+        for i in range(500):
             print("Next Iteration:", i)
-            i += 1
+            
             for plz, key in mp.items():
                 crawl(key, plz, driver)
 
@@ -70,8 +49,7 @@ def main():
             time.sleep(180)
 
     except KeyboardInterrupt:
-        print("Closing")
-        driver.close()
+        destroy(driver)
 
 
 if __name__ == "__main__":

@@ -1,37 +1,20 @@
-import os
-import sys
 import time
-from selenium import webdriver
-from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.common.keys import Keys
+from util import *
 
 # TODO enter the plz of the stations you want to monitor
 plzs = [
-    "70174",
+    # "70174",
     "72072",
     "72213",
-    "71065"
+    "71065",
+    "70629"
 ]
 
-print("\nStarting...\n")
 
+def crawl(plz, driver):
+    url = "https://229-iz.impfterminservice.de/impftermine/service?plz=" + plz
 
-def create():
-    options = webdriver.ChromeOptions()
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    # options.binary_location = r"D:\Program Files\Google\Chrome\Application\chrome.exe"
-
-    driver = webdriver.Chrome(
-        executable_path="chromedriver.exe", options=options)
-
-    driver.minimize_window()
-
-    return driver
-
-
-def crawl(plz, driver: WebDriver):
-    driver.get(
-        "https://229-iz.impfterminservice.de/impftermine/service?plz=" + plz)
+    driver.get(url)
     time.sleep(2)
 
     try:
@@ -48,29 +31,25 @@ def crawl(plz, driver: WebDriver):
             driver.find_element_by_xpath(
                 "/html/body/app-root/div/app-page-its-login/div/div/div[2]/app-its-login-user/div/div/app-corona-vaccination/div[3]/div/div/div/div[2]/div/app-corona-vaccination-no/div[1]"
             )
-            driver.maximize_window()
-            input("One was found!")
+            onSuccess(url)
         except:
             print("element not found")
 
 
 def main():
     driver = create()
-    i = 0
 
     try:
-        while True:
+        for i in range(500):
             print("Next Iteration:", i)
-            i += 1
             for plz in plzs:
                 crawl(plz, driver)
 
             driver.get("https://www.google.com")
             time.sleep(180)
 
-    except Exception as e:
-        print("Closing because of:", e)
-        driver.close()
+    except KeyboardInterrupt:
+        destroy(driver)
 
 
 if __name__ == "__main__":
