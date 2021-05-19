@@ -3,7 +3,7 @@ from util import *
 
 # TODO enter the plz of the stations you want to monitor
 plzs = [
-    # "70174",
+    "70174",
     "72072",
     "72213",
     "71065",

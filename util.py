@@ -12,6 +12,7 @@ def onSuccess(url):
 def create():
     options = webdriver.ChromeOptions()
     options.binary_location = r"D:\Program Files\Google\Chrome\Application\chrome.exe"
+    options.add_argument("--incognito")
     driver = webdriver.Chrome("chromedriver.exe", options=options)
 
     driver.minimize_window()

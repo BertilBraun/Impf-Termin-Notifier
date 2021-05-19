@@ -1,9 +1,9 @@
 import time
 from util import *
 
-mp = {
-    # "12345": "AAAA-AAAA-AAAA", # TODO replace this
-}
+mp = [
+    # ("12345", "AAAA-AAAA-AAAA"), # TODO replace this
+]
 
 
 def crawl(key, plz, driver):
@@ -12,6 +12,16 @@ def crawl(key, plz, driver):
     time.sleep(1)
     driver.get(url)
     time.sleep(1)
+
+    while True:
+        try:
+            if "Warteraum" in driver.find_element_by_xpath("/html/body/section/div[2]/div/div/h1").get_attribute("innerText"):
+                print("waiting")
+                time.sleep(5)
+            else:
+                break
+        except:
+            break
 
     try:
         driver.execute_script(
@@ -41,12 +51,14 @@ def main():
     try:
         for i in range(500):
             print("Next Iteration:", i)
-            
-            for plz, key in mp.items():
+
+            for plz, key in mp:
                 crawl(key, plz, driver)
 
             driver.get("https://www.google.com")
-            time.sleep(180)
+
+            print("Done with Iteration")
+            time.sleep(600)
 
     except KeyboardInterrupt:
         destroy(driver)
