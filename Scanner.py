@@ -1,8 +1,6 @@
 import os
 import requests
 import smtplib
-from dotenv import load_dotenv
-load_dotenv()
 
 URL = "https://sifi.impfomizer.de/selectevent"
 EMAIL = "bertil.braun.business@gmail.com"
