@@ -1,5 +1,4 @@
 import os
-import time
 import requests
 import smtplib
 from dotenv import load_dotenv
@@ -26,16 +25,13 @@ def send_email():
 
 
 def main():
-    while True:
-        req = requests.get(URL)
+    req = requests.get(URL)
 
-        if "Impftermin auswählen" in req.text:
-            print("Impfung möglich")
-            send_email()
-        else:
-            print("Impfung nicht möglich")
-
-        time.sleep(60 * 10)  # sleep 10 minutes
+    if "Impftermin auswählen" in req.text:
+        print("Impfung möglich")
+        send_email()
+    else:
+        print("Impfung nicht möglich")
 
 
 if __name__ == "__main__":
