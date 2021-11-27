@@ -5,7 +5,7 @@ import smtplib
 URL = "https://sifi.impfomizer.de/selectevent"
 EMAIL = "bertil.braun.business@gmail.com"
 PASSWORD = os.environ.get("password")
-TO_EMAIL = ["uliundoli@gmx.de"]
+TO_EMAIL = os.environ.get("emails").split(",")
 MESSAGE = f"Impftermin möglich: {URL}"
 
 
